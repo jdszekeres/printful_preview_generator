@@ -1,0 +1,234 @@
+var prods = [];
+var productEndings = [
+    "Matte Poster",
+    "Canvas Print",
+];
+
+
+async function fetchProducts() {
+return new Promise((resolve) => {
+    chrome.storage.local.get('products', (result) => {
+        console.log('Products retrieved:', result.products);
+        resolve(result.products);
+    });
+});
+}
+
+
+function generateHTML(productsJson, productEndingsJson) {
+    return `
+<style>
+body{
+    font-family:Arial,sans-serif;
+    margin:20px;
+}
+
+#js-search{
+    width:100%;
+    max-width:500px;
+    margin:0 auto 30px;
+    display:block;
+    padding:12px;
+    font-size:16px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    box-sizing:border-box;
+}
+
+#js-gallery{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+    gap:24px;
+    max-width:1400px;
+    margin:auto;
+}
+
+.js-card{
+    background:#fff;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
+    transition:.2s;
+}
+
+.js-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 8px 24px rgba(0,0,0,.15);
+}
+
+.js-card img{
+    width:100%;
+    display:block;
+}
+
+.js-card h3{
+    margin:16px;
+    text-align:center;
+    font-size:18px;
+}
+
+.js-buttons{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    padding:0 16px 16px;
+}
+
+.js-buttons a{
+    flex:1;
+    min-width:120px;
+    text-align:center;
+    text-decoration:none;
+    padding:10px;
+    border:1px solid #333;
+    border-radius:6px;
+    color:#333;
+    font-weight:600;
+    box-sizing:border-box;
+}
+
+.js-buttons a:hover{
+    background:#333;
+    color:#fff;
+}
+</style>
+
+
+
+<div id="js-gallery"></div>
+
+<script>
+
+const products = ${productsJson};
+
+// Add new product types here in the future if desired
+const PRODUCT_SUFFIXES = ${productEndingsJson};
+
+function splitProduct(title){
+
+    for(const suffix of PRODUCT_SUFFIXES){
+
+        if(title.endsWith(suffix)){
+            return {
+                baseName:title.slice(0,-suffix.length).trim(),
+                variant:suffix
+            };
+        }
+    }
+
+    return {
+        baseName:title,
+        variant:"Product"
+    };
+}
+
+function buildGalleryData(products){
+
+    const grouped = new Map();
+
+    products.forEach(product => {
+
+        const info = splitProduct(product.title);
+
+        if (!grouped.has(info.baseName)) {
+
+            grouped.set(info.baseName, {
+                title: info.baseName,
+                image: product.image,
+                variants: []
+            });
+        }
+
+        grouped.get(info.baseName).variants.push({
+            name: info.variant,
+            url: product.url
+        });
+    });
+
+    return [...grouped.values()];
+}
+
+const galleryData = buildGalleryData(products);
+const gallery = document.getElementById("js-gallery");
+
+function render(filter=''){
+
+    gallery.innerHTML='';
+
+    galleryData
+        .filter(item =>
+            item.title.toLowerCase().includes(filter.toLowerCase())
+        )
+        .forEach(item=>{
+
+            const buttons = item.variants
+                .map(v=>'
+                    <a href="\${v.url}" target="_blank">
+                        \${v.name}
+                    </a>
+                ')
+                .join('');
+
+            gallery.insertAdjacentHTML('beforeend','
+                <div class="js-card">
+                    <img
+                        loading="lazy"
+                        src="\${item.image}"
+                        alt="\${item.title}">
+                    <h3>\${item.title}</h3>
+                    <div class="js-buttons">
+                        \${buttons}
+                    </div>
+                </div>
+            ');
+        });
+}
+
+render();
+
+</script>
+`
+}
+
+function updateProductEndings(endings) {
+    const html = generateHTML(JSON.stringify(prods), JSON.stringify(productEndings));
+    document.getElementById('html_output').textContent = html;
+    const productEndingsList = document.getElementById('product_endings_ul');
+    productEndingsList.innerHTML = '';
+    endings.forEach(ending => {
+        const listItem = document.createElement('li');
+        listItem.textContent = ending;
+        productEndingsList.appendChild(listItem);
+    });
+
+}
+
+document.getElementById('add_ending_button').addEventListener('click', () => {
+    const newEnding = document.getElementById('new_ending_input').value.trim();
+    if (newEnding && !productEndings.includes(newEnding)) {
+        productEndings.push(newEnding);
+        updateProductEndings(productEndings);
+        document.getElementById('new_ending_input').value = '';
+    }
+});
+
+function start() {
+    updateProductEndings(productEndings);
+
+    fetchProducts().then(products => {
+        prods = [...products];
+        const productList = document.getElementById('products_ul');
+        products.slice(0, 5).forEach(product => {
+            const listItem = document.createElement('li');
+            listItem.textContent = product.title;
+            productList.appendChild(listItem);
+        });
+        
+        document.getElementById('product_count').textContent = products.length - 5;
+
+        const html = generateHTML(JSON.stringify(prods), JSON.stringify(productEndings));
+        document.getElementById('html_output').textContent = html;
+    });
+}
+
+start();

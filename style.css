@@ -1,0 +1,69 @@
+html, body {
+    width: 500px;
+    height: 500px;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.row {
+    display: flex;
+    width: 100vw;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+#new_endings_container {
+    display: flex;
+    justify-content: space-between;
+    width: 100vw;
+    margin-top: 10px;
+}
+
+#html_selection {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-around;
+}
+
+#copy_container {
+    display: flex;
+    justify-content: end;
+    width: 100vw;
+}
+
+
+
+#copy_button {
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    margin-right: 2px;
+}
+
+#html_output {
+    width: 100%;
+    height: 200px;
+    padding: 10px;
+    padding-top: 0px;
+    margin-top: 2px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    overflow-y: auto;
+}

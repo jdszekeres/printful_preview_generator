@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Printful Preview Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div id="products_list">
+                    <h2>Products</h2>
+                    <ul id="products_ul">
+                        <!-- Product items will be dynamically added here -->
+                    </ul>
+                    <p>And <span id="product_count">0</span> more.</p>
+            </div>
+            <div class="product_endings">
+                <h2>Product Endings</h2>
+                <ul id="product_endings_ul">
+                    <!-- Product ending items will be dynamically added here -->
+                </ul>
+                <div id="add_ending_container">
+                    <input type="text" id="new_ending_input" placeholder="New product ending">
+                    <button id="add_ending_button">Add</button>
+                </div>
+            </div> 
+        </div>
+
+        <div id="html_section">
+            <div id="copy_container">
+                <button id="copy_button">Copy HTML</button>
+            </div>
+            <code>
+                <pre id="html_output">
+                    Generated HTML will appear here...
+                </pre>
+            </code>
+        </div>
+    </div>
+</body>
+<script src="popup.js"></script>
+</html>
