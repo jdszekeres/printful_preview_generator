@@ -19,7 +19,12 @@ This Chrome Extension pulls product listings from a Printful Quick Site and comp
 When on any printful store (`*.printful.me`), open the browser popup to generate the embed snippet
 
 ## Screenshots
-TODO: Add screenshots
+
+| Popup Page | Preview Page |
+| :---:     | :---:    |
+| ![Popup Page Screenshot](media/scrot2.png)     | ![Preview Page Screenshot](media/scrot1.png)   |
+
+
 
 ## Permissions
 Printful Preview Generator uses the following permissions:
