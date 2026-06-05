@@ -5,7 +5,7 @@ This Chrome Extension pulls product listings from a Printful Quick Site and comp
 
 ## Installation
 
-1. Download the latest release
+1. Download the [latest release](https://github.com/jdszekeres/printful_preview_generator/releases)
 2. Unzip the folder
 3. visit [chrome://extensions](chrome://extensions)
 4. Enable **Developer Mode** in the top right corner
