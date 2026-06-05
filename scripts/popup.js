@@ -24,6 +24,20 @@ function updateProductEndings(endings) {
         productEndingsList.appendChild(listItem);
     });
 
+    //get unique products with ending list
+    const uniqueProducts = new Set(prods.map(product => {
+        for(const ending of endings){
+            if(product.title.endsWith(ending)){
+                return product.title.slice(0,-ending.length).trim();
+            }
+        }
+        return product.title;
+    }));
+
+    console.log('Unique products:', uniqueProducts);
+
+    document.getElementById('unique_products').textContent = uniqueProducts.size;
+
 }
 
 function updateHTML() {
@@ -55,6 +69,15 @@ document.getElementById('preview_button').addEventListener('click', () => {
 });
 
 function start() {
+
+    const currentTab = chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        const activeTab = tabs[0];
+        if (!activeTab.url.includes('printful.me')) {
+            document.documentElement.innerHTML = '<div style="width: 500px; height: 200px;"><h1 style="color: red; text-align: center; margin-top: 50px;">Please navigate to a Printful product page to use this extension.</h1></div>';
+            return;
+        }
+    });
+
     updateProductEndings(productEndings);
 
     fetchProducts().then(products => {
@@ -65,6 +88,9 @@ function start() {
             listItem.textContent = product.title;
             productList.appendChild(listItem);
         });
+
+        updateProductEndings(productEndings);
+
         
         document.getElementById('product_count').textContent = products.length - 5;
 
