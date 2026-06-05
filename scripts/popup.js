@@ -49,7 +49,7 @@ document.getElementById('preview_button').addEventListener('click', () => {
     const html = GenerateHTMLNoJS(JSON.stringify(prods), JSON.stringify(productEndings));
 
     chrome.storage.local.set({ previewHtml: html }, () => {
-        chrome.windows.create({ url: 'view.html', type: 'popup', width: 800, height: 600 });
+        chrome.windows.create({ url: 'pages/preview.html', type: 'popup', width: 800, height: 600 });
     });
 
 });

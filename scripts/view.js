@@ -5,11 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const htmlElement = document.getElementById('content');
             htmlElement.innerHTML = result.previewHtml;
 
-            //find the script tag and execute it
-            const scriptTag = htmlElement.querySelector('script');
-            if (scriptTag) {
-                Function(scriptTag.textContent)();
-            }
             
         }
     });
