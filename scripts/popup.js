@@ -68,6 +68,17 @@ document.getElementById('preview_button').addEventListener('click', () => {
 
 });
 
+document.getElementById('copy_button').addEventListener('click', () => {
+    const html = generateHTML(JSON.stringify(prods), JSON.stringify(productEndings));
+    navigator.clipboard.writeText(html).then(() => {
+        alert('HTML copied to clipboard!');
+    }
+    ).catch(err => {
+        console.error('Could not copy text: ', err);
+    }
+    );
+});
+
 function start() {
 
     const currentTab = chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
