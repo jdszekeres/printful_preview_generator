@@ -171,6 +171,7 @@ render();
 
 </script>
 `
+
 }
 
 function GenerateHTMLNoJS(productsJson, productEndingsJson) {
