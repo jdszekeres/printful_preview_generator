@@ -13,9 +13,9 @@ This Chrome Extension pulls product listings from a Printful Quick Site and comp
 6. Use on any Printful.me Quick Shop :tada:
 
 ## Usage
-<video src="media/usage.mp4" controls>
+https://github.com/user-attachments/assets/aa7c26c4-67d4-4925-9da8-34a3a6c0ecb0
 
-</video>
+
 When on any printful store (`*.printful.me`), open the browser popup to generate the embed snippet
 
 ## Screenshots
