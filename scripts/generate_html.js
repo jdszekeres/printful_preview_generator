@@ -145,10 +145,25 @@ function render(filter=''){
         .forEach(item=>{
 
             const buttons = item.variants
-                .map(v=>'<a href="\${v.url}" target="_blank">\${v.name}</a>')
+                .map(v=>\`
+                    <a href="\${v.url}" target="_blank">
+                        \${v.name}
+                    </a>
+                \`)
                 .join('');
 
-            gallery.insertAdjacentHTML('beforeend','<div class="js-card"><img loading="lazy" src="\${item.image}" alt="\${item.title}"><h3>\${item.title}</h3><div class="js-buttons">\${buttons}</div></div>');
+            gallery.insertAdjacentHTML('beforeend',\`
+                <div class="js-card">
+                    <img
+                        loading="lazy"
+                        src="\${item.image}"
+                        alt="\${item.title}">
+                    <h3>\${item.title}</h3>
+                    <div class="js-buttons">
+                        \${buttons}
+                    </div>
+                </div>
+            \`);
         });
 }
 
