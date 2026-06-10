@@ -29,6 +29,9 @@ async function onPrintfulPage() {
     });
 }
 
-if (window.location.href.includes('printful.me')) {
-    onPrintfulPage();
-}
+ const currentTab = chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        const activeTab = tabs[0];
+        if (activeTab.url.includes('printful.me')) {
+            onPrintfulPage();
+        }
+    });
