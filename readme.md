@@ -18,6 +18,8 @@ https://github.com/user-attachments/assets/aa7c26c4-67d4-4925-9da8-34a3a6c0ecb0
 
 When on any printful store (`*.printful.me`), open the browser popup to generate the embed snippet
 
+Try on [jackson-szekeres-photo.printful.me](https://jackson-szekeres-photo.printful.me/) if you don't have your own printful site.
+
 ## Screenshots
 
 | Popup Page | Preview Page |
